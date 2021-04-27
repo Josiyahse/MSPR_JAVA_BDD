@@ -1,117 +1,118 @@
-CREATE TABLE drones(
-   Id_drones COUNTER,
-   libelle VARCHAR(50),
-   PRIMARY KEY(Id_drones)
+CREATE TABLE Drone(
+   id_drone INT,
+   libelle VARCHAR(150),
+   PRIMARY KEY(id_drone)
 );
 
-CREATE TABLE interieurs(
-   Id_interieurs COUNTER,
-   libelle VARCHAR(50),
-   PRIMARY KEY(Id_interieurs)
+CREATE TABLE Interieur(
+   id_interieur INT,
+   libelle VARCHAR(150),
+   PRIMARY KEY(id_interieur)
 );
 
 CREATE TABLE Corps_metier(
-   Id_Corps_metier COUNTER,
+   id_corps_metier INT,
    nom VARCHAR(50),
-   PRIMARY KEY(Id_Corps_metier)
+   PRIMARY KEY(id_corps_metier)
 );
 
-CREATE TABLE sous_traitants(
-   Id_sous_traitants COUNTER,
+CREATE TABLE Sous_traitant(
+   id_sous_traitant INT,
    nom VARCHAR(50),
-   rue VARCHAR(50),
-   code_postale VARCHAR(50),
+   rue VARCHAR(200),
+   code_postal INT(5),
    ville VARCHAR(50),
-   PRIMARY KEY(Id_sous_traitants)
+   PRIMARY KEY(id_sous_traitant)
 );
 
-CREATE TABLE Personnes(
-   Id_Personnes COUNTER,
+CREATE TABLE Personne(
+   id_personne INT,
    nom VARCHAR(50),
    prenom VARCHAR(50),
-   mail VARCHAR(50),
-   PRIMARY KEY(Id_Personnes)
+   mail VARCHAR(100),
+   PRIMARY KEY(id_personne)
 );
 
-CREATE TABLE Projets(
-   Id_Projets COUNTER,
+CREATE TABLE Projet(
+   id_projet INT,
    nom VARCHAR(50),
-   PRIMARY KEY(Id_Projets)
+   PRIMARY KEY(id_projet)
 );
 
-CREATE TABLE Chantiers(
-   Id_Chantiers COUNTER,
+CREATE TABLE Chantier(
+   id_chantier INT,
    nom VARCHAR(50),
-   PRIMARY KEY(Id_Chantiers)
+   PRIMARY KEY(id_chantier)
 );
 
-CREATE TABLE rôles(
-   Id_rôles COUNTER,
+CREATE TABLE Role(
+   id_role INT,
    nom VARCHAR(50),
-   prvilèges VARCHAR(50),
-   PRIMARY KEY(Id_rôles)
+   privilege VARCHAR(50),
+   PRIMARY KEY(id_role)
 );
 
-CREATE TABLE profils(
-   Id_profils COUNTER,
+CREATE TABLE Profil(
+   id_profil INT,
    nom VARCHAR(50),
    username VARCHAR(50),
    mdp VARCHAR(50),
-   Id_Personnes INT NOT NULL,
-   PRIMARY KEY(Id_profils),
-   UNIQUE(Id_Personnes),
-   FOREIGN KEY(Id_Personnes) REFERENCES Personnes(Id_Personnes)
+   id_personne INT NOT NULL,
+   PRIMARY KEY(id_profil),
+   UNIQUE(id_personne),
+   FOREIGN KEY(id_personne) REFERENCES Personne(id_personne)
 );
 
-CREATE TABLE Captures(
-   Id_Captures COUNTER,
-   dates DATE,
-   heures TIME,
-   Coordonnées_X VARCHAR(50),
-   Coordonnées_Y VARCHAR(50),
-   Jalon_GANT VARCHAR(50),
+CREATE TABLE Capture(
+   id_capture INT,
+   date_capture DATE,
+   heure_capture VARCHAR(10),
+   coordonnee_x DECIMAL,
+   coordonnee_y DECIMAL,
+   jalon_gant VARCHAR(50),
    etape_capture VARCHAR(50),
-   incidents VARCHAR(50),
-   liens VARCHAR(50),
-   Id_Chantiers INT NOT NULL,
-   Id_Projets INT NOT NULL,
-   Id_interieurs INT,
-   Id_drones INT,
-   PRIMARY KEY(Id_Captures),
-   FOREIGN KEY(Id_Chantiers) REFERENCES Chantiers(Id_Chantiers),
-   FOREIGN KEY(Id_Projets) REFERENCES Projets(Id_Projets),
-   FOREIGN KEY(Id_interieurs) REFERENCES interieurs(Id_interieurs),
-   FOREIGN KEY(Id_drones) REFERENCES drones(Id_drones)
+   incident VARCHAR(200),
+   lien VARCHAR(100),
+   id_chantier INT NOT NULL,
+   id_projet INT NOT NULL,
+   id_interieur INT,
+   id_drone INT,
+   PRIMARY KEY(id_capture),
+   FOREIGN KEY(id_chantier) REFERENCES Chantier(id_chantier),
+   FOREIGN KEY(id_projet) REFERENCES Projet(id_projet),
+   FOREIGN KEY(id_interieur) REFERENCES Interieur(id_interieur),
+   FOREIGN KEY(id_drone) REFERENCES Drone(id_drone)
 );
 
-CREATE TABLE cibler(
-   Id_Captures INT,
-   Id_Corps_metier INT,
-   PRIMARY KEY(Id_Captures, Id_Corps_metier),
-   FOREIGN KEY(Id_Captures) REFERENCES Captures(Id_Captures),
-   FOREIGN KEY(Id_Corps_metier) REFERENCES Corps_metier(Id_Corps_metier)
+CREATE TABLE Cibler(
+   id_capture INT,
+   id_corps_metier INT,
+   PRIMARY KEY(id_capture, id_corps_metier),
+   FOREIGN KEY(id_capture) REFERENCES Capture(id_capture),
+   FOREIGN KEY(id_corps_metier) REFERENCES Corps_metier(id_corps_metier)
 );
 
-CREATE TABLE concerner(
-   Id_Captures INT,
-   Id_sous_traitants INT,
-   PRIMARY KEY(Id_Captures, Id_sous_traitants),
-   FOREIGN KEY(Id_Captures) REFERENCES Captures(Id_Captures),
-   FOREIGN KEY(Id_sous_traitants) REFERENCES sous_traitants(Id_sous_traitants)
+CREATE TABLE Concerner(
+   id_capture INT,
+   id_sous_traitant INT,
+   PRIMARY KEY(id_capture, id_sous_traitant),
+   FOREIGN KEY(id_capture) REFERENCES Capture(id_capture),
+   FOREIGN KEY(id_sous_traitant) REFERENCES Sous_traitant(id_sous_traitant)
 );
 
-CREATE TABLE posséder(
-   Id_Corps_metier INT,
-   Id_Personnes INT,
-   PRIMARY KEY(Id_Corps_metier, Id_Personnes),
-   FOREIGN KEY(Id_Corps_metier) REFERENCES Corps_metier(Id_Corps_metier),
-   FOREIGN KEY(Id_Personnes) REFERENCES Personnes(Id_Personnes)
+CREATE TABLE Posseder(
+   id_corps_metier INT,
+   id_personne INT,
+   PRIMARY KEY(id_corps_metier, id_personne),
+   FOREIGN KEY(id_corps_metier) REFERENCES Corps_metier(id_corps_metier),
+   FOREIGN KEY(id_personne) REFERENCES Personne(id_personne)
 );
 
-CREATE TABLE Bénéficier(
-   Id_Personnes INT,
-   Id_rôles INT,
-   PRIMARY KEY(Id_Personnes, Id_rôles),
-   FOREIGN KEY(Id_Personnes) REFERENCES Personnes(Id_Personnes),
-   FOREIGN KEY(Id_rôles) REFERENCES rôles(Id_rôles)
+CREATE TABLE Beneficier(
+   id_personne INT,
+   id_role INT,
+   PRIMARY KEY(id_personne, id_role),
+   FOREIGN KEY(id_personne) REFERENCES Personne(id_personne),
+   FOREIGN KEY(id_role) REFERENCES Role(id_role)
 );
+
