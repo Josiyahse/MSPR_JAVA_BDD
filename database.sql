@@ -53,12 +53,13 @@ CREATE TABLE Role(
 );
 
 CREATE TABLE Profil(
-   id_profil INT,
-   nom VARCHAR(50),
    username VARCHAR(50),
+   nom VARCHAR(50),
    mdp VARCHAR(50),
+   date_modification DATE,
+   est_interne NUMBER(1),
    id_personne INT NOT NULL,
-   PRIMARY KEY(id_profil),
+   PRIMARY KEY(username),
    UNIQUE(id_personne),
    FOREIGN KEY(id_personne) REFERENCES Personne(id_personne)
 );
