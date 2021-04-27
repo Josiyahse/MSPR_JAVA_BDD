@@ -22,7 +22,9 @@ CREATE TABLE Sous_traitant(
    rue VARCHAR(200),
    code_postal INT(5),
    ville VARCHAR(50),
-   PRIMARY KEY(id_sous_traitant)
+   id_corps_metier INT,
+   PRIMARY KEY(id_sous_traitant),
+   FOREIGN KEY(id_corps_metier) REFERENCES Corps_metier(id_corps_metier)
 );
 
 CREATE TABLE Personne(
@@ -36,12 +38,14 @@ CREATE TABLE Personne(
 CREATE TABLE Projet(
    id_projet INT,
    nom VARCHAR(50),
+   debut DATE,
    PRIMARY KEY(id_projet)
 );
 
 CREATE TABLE Chantier(
    id_chantier INT,
    nom VARCHAR(50),
+   debut DATE,
    PRIMARY KEY(id_chantier)
 );
 
