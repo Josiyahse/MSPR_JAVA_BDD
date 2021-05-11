@@ -59,7 +59,7 @@ CREATE TABLE Role(
 );
 
 CREATE TABLE Profil(
-   username INT,
+   username VARCHAR(50),
    nom VARCHAR(50),
    mdp VARCHAR(50),
    date_modification VARCHAR(50),
