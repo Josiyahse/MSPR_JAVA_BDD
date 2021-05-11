@@ -107,7 +107,7 @@ CREATE TABLE Posseder(
    FOREIGN KEY(id_personne) REFERENCES Personne(id_personne)
 );
 
-CREATE TABLE Bénéficier(
+CREATE TABLE Beneficier(
    id_personne INT,
    id_role INT,
    PRIMARY KEY(id_personne, id_role),
